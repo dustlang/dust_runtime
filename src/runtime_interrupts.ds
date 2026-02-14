@@ -1,0 +1,68 @@
+// Dust Runtime - Interrupt Handling for Bare-Metal Kernel
+// IDT and interrupt management without libc
+
+forge Interrupts {
+    
+    const IDT_SIZE: UInt32 = 256;
+    const IRQ_BASE: UInt32 = 32;
+    
+    const IRQ_TIMER: UInt32 = 0;
+    const IRQ_KEYBOARD: UInt32 = 1;
+    const IRQ_CASCADE: UInt32 = 2;
+    const IRQ_COM1: UInt32 = 4;
+    const IRQ_COM2: UInt32 = 3;
+    const IRQ_DISK: UInt32 = 14;
+    
+    proc K::init() {
+        emit "Interrupts::init";
+    }
+    
+    proc K::enable() {
+        emit "Interrupts::enable";
+    }
+    
+    proc K::disable() {
+        emit "Interrupts::disable";
+    }
+    
+    proc K::register_handler(vector: UInt32, handler: UInt64) -> UInt32 {
+        emit "Interrupts::register_handler";
+        return 0;
+    }
+    
+    proc K::enable_irq(irq: UInt32) {
+        emit "Interrupts::enable_irq";
+    }
+    
+    proc K::disable_irq(irq: UInt32) {
+        emit "Interrupts::disable_irq";
+    }
+    
+    proc K::send_eoi() {
+        emit "Interrupts::send_eoi";
+    }
+    
+    proc Q::init() -> UInt32 {
+        return 100;
+    }
+    
+    proc Q::enable() -> UInt32 {
+        return 100;
+    }
+    
+    proc Q::disable() -> UInt32 {
+        return 100;
+    }
+    
+    proc Phi::init() -> UInt32 {
+        return 100;
+    }
+    
+    proc Phi::enable() -> UInt32 {
+        return 100;
+    }
+    
+    proc Phi::disable() -> UInt32 {
+        return 100;
+    }
+}

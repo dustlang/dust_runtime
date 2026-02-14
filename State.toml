@@ -1,0 +1,15 @@
+# Dust Runtime - OS Services for Bare-Metal DPL
+# DPL v0.2 Specification
+
+[workspace]
+name = "dust_runtime"
+version = "0.2.0"
+description = "Dust Runtime - OS services for bare-metal DPL"
+
+[sector]
+name = "dust_runtime"
+path = "src"
+
+[target.x64-pc-none]
+linker = "ld"
+linker_flags = ["-nostdlib", "-static"]
