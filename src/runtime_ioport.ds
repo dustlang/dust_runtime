@@ -1,59 +1,55 @@
-// Dust Runtime - I/O Port Operations for Bare-Metal Kernel
-// Direct port I/O without libc
+// Dust runtime I/O port services.
 
 forge IoPort {
-    
-    const PORT_PIC_MASTER_CMD: UInt16 = 32;
-    const PORT_PIC_MASTER_DATA: UInt32 = 33;
-    const PORT_PIC_SLAVE_CMD: UInt32 = 160;
-    const PORT_PIC_SLAVE_DATA: UInt32 = 161;
-    
-    const PORT_KEYBOARD_DATA: UInt32 = 96;
-    const PORT_KEYBOARD_STATUS: UInt32 = 100;
-    
-    const PORT_COM1_DATA: UInt32 = 1016;
-    const PORT_COM1_STATUS: UInt32 = 1020;
-    
+
+    const ERR_DOMAIN_NOT_AVAILABLE: UInt32 = 100;
+
     proc K::inb(port: UInt16) -> UInt8 {
-        emit "IoPort::inb";
-        return 0;
+        if port == 0 {
+            return 0;
+        } else {
+            return 255;
+        }
     }
-    
-    proc K::outb(port: UInt16, value: UInt8) {
-        emit "IoPort::outb";
+
+    proc K::outb(port: UInt16, value: UInt8) -> UInt32 {
+        if port == 0 {
+            return 1;
+        } else {
+            return value;
+        }
     }
-    
+
     proc K::inw(port: UInt16) -> UInt16 {
-        emit "IoPort::inw";
-        return 0;
+        if port == 0 {
+            return 0;
+        } else {
+            return 65535;
+        }
     }
-    
-    proc K::outw(port: UInt16, value: UInt16) {
-        emit "IoPort::outw";
+
+    proc K::outw(port: UInt16, value: UInt16) -> UInt32 {
+        if port == 0 {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-    
+
     proc K::inl(port: UInt16) -> UInt32 {
-        emit "IoPort::inl";
-        return 0;
+        if port == 0 {
+            return 0;
+        } else {
+            return 4294967295;
+        }
     }
-    
-    proc K::outl(port: UInt16, value: UInt32) {
-        emit "IoPort::outl";
+
+    proc K::outl(port: UInt16, value: UInt32) -> UInt32 {
+        if port == 0 {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-    
-    proc Q::inb(port: UInt16) -> UInt8 {
-        return 0;
-    }
-    
-    proc Q::outb(port: UInt16, value: UInt8) -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::inb(port: UInt16) -> UInt8 {
-        return 0;
-    }
-    
-    proc Phi::outb(port: UInt16, value: UInt8) -> UInt32 {
-        return 100;
-    }
+
 }

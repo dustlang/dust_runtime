@@ -1,44 +1,45 @@
-// Dust Runtime - Main Entry Point
-// Bootstraps all runtime services for bare-metal kernel
+// Dust runtime main lifecycle.
 
 forge Runtime {
-    
+
     const VERSION_MAJOR: UInt8 = 0;
-    const VERSION_MINOR: UInt8 = 2;
-    
-    proc K::init() {
-        emit "XDV Dust Runtime v0.2";
-        Console::K::init();
-        Memory::K::init();
-        Interrupts::K::init();
-        Process::K::init();
+    const VERSION_MINOR: UInt8 = 3;
+
+    const ERR_OK: UInt32 = 0;
+    const ERR_DOMAIN_NOT_AVAILABLE: UInt32 = 100;
+
+    proc K::runtime_init() -> UInt32 {
+        emit "dust_runtime init";
+        console_init();
+        memory_init();
+        interrupts_init();
+        process_init();
+        return ERR_OK;
     }
-    
-    proc K::main() {
-        Runtime::K::init();
-        emit "Runtime initialized";
-    }
-    
-    proc K::panic(msg: UInt64) {
-        emit "KERNEL PANIC";
-        loop {
-            
+
+    proc K::runtime_main() -> UInt32 {
+        let init_result = runtime_init();
+        if init_result == ERR_OK {
+            emit "dust_runtime online";
+            return ERR_OK;
+        } else {
+            return 1;
         }
     }
-    
-    proc Q::init() -> UInt32 {
-        return 100;
+
+    proc K::init() -> UInt32 {
+        return runtime_init();
     }
-    
-    proc Q::main() -> UInt32 {
-        return 100;
+
+    proc K::main() -> UInt32 {
+        return runtime_main();
     }
-    
-    proc Phi::init() -> UInt32 {
-        return 100;
+
+    proc K::panic(msg: UInt64) -> UInt32 {
+        emit "dust_runtime panic";
+        puts(msg);
+        putchar(10);
+        return 1;
     }
-    
-    proc Phi::main() -> UInt32 {
-        return 100;
-    }
+
 }

@@ -1,68 +1,57 @@
-// Dust Runtime - Interrupt Handling for Bare-Metal Kernel
-// IDT and interrupt management without libc
+// Dust runtime interrupt services.
 
 forge Interrupts {
-    
+
     const IDT_SIZE: UInt32 = 256;
     const IRQ_BASE: UInt32 = 32;
-    
-    const IRQ_TIMER: UInt32 = 0;
-    const IRQ_KEYBOARD: UInt32 = 1;
-    const IRQ_CASCADE: UInt32 = 2;
-    const IRQ_COM1: UInt32 = 4;
-    const IRQ_COM2: UInt32 = 3;
-    const IRQ_DISK: UInt32 = 14;
-    
-    proc K::init() {
-        emit "Interrupts::init";
-    }
-    
-    proc K::enable() {
-        emit "Interrupts::enable";
-    }
-    
-    proc K::disable() {
-        emit "Interrupts::disable";
-    }
-    
-    proc K::register_handler(vector: UInt32, handler: UInt64) -> UInt32 {
-        emit "Interrupts::register_handler";
+    const ERR_DOMAIN_NOT_AVAILABLE: UInt32 = 100;
+
+    proc K::interrupts_init() -> UInt32 {
+        emit "interrupts_init";
         return 0;
     }
-    
-    proc K::enable_irq(irq: UInt32) {
-        emit "Interrupts::enable_irq";
+
+    proc K::init() -> UInt32 {
+        return interrupts_init();
     }
-    
-    proc K::disable_irq(irq: UInt32) {
-        emit "Interrupts::disable_irq";
+
+    proc K::enable() -> UInt32 {
+        emit "interrupts_enable";
+        return 0;
     }
-    
-    proc K::send_eoi() {
-        emit "Interrupts::send_eoi";
+
+    proc K::disable() -> UInt32 {
+        emit "interrupts_disable";
+        return 0;
     }
-    
-    proc Q::init() -> UInt32 {
-        return 100;
+
+    proc K::register_handler(vector: UInt32, handler: UInt64) -> UInt32 {
+        if vector >= IDT_SIZE {
+            return 1;
+        } else {
+            if handler == 0 {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
-    
-    proc Q::enable() -> UInt32 {
-        return 100;
+
+    proc K::enable_irq(irq: UInt32) -> UInt32 {
+        return register_handler(IRQ_BASE + irq, 1);
     }
-    
-    proc Q::disable() -> UInt32 {
-        return 100;
+
+    proc K::disable_irq(irq: UInt32) -> UInt32 {
+        if irq >= IDT_SIZE {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-    
-    proc Phi::init() -> UInt32 {
-        return 100;
+
+    proc K::send_eoi() -> UInt32 {
+        emit "interrupts_eoi";
+        return 0;
     }
-    
-    proc Phi::enable() -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::disable() -> UInt32 {
-        return 100;
-    }
+
 }

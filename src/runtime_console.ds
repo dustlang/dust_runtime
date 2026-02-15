@@ -1,83 +1,70 @@
-// Dust Runtime - Console I/O for Bare-Metal Kernel
-// Provides basic console output without libc
+// Dust runtime console services.
 
 forge Console {
-    
-    const VGA_ADDRESS: UInt64 = 49152;
+
     const VGA_WIDTH: UInt32 = 80;
     const VGA_HEIGHT: UInt32 = 25;
-    const VGA_SIZE: UInt32 = 4000;
-    
-    const COLOR_BLACK: UInt8 = 0;
-    const COLOR_BLUE: UInt8 = 1;
-    const COLOR_GREEN: UInt8 = 2;
-    const COLOR_CYAN: UInt8 = 3;
-    const COLOR_RED: UInt8 = 4;
-    const COLOR_MAGENTA: UInt8 = 5;
-    const COLOR_BROWN: UInt8 = 6;
-    const COLOR_LIGHT_GRAY: UInt8 = 7;
-    const COLOR_DARK_GRAY: UInt8 = 8;
-    const COLOR_LIGHT_BLUE: UInt8 = 9;
-    const COLOR_LIGHT_GREEN: UInt8 = 10;
-    const COLOR_LIGHT_CYAN: UInt8 = 11;
-    const COLOR_LIGHT_RED: UInt8 = 12;
-    const COLOR_LIGHT_MAGENTA: UInt8 = 13;
-    const COLOR_YELLOW: UInt8 = 14;
-    const COLOR_WHITE: UInt8 = 15;
-    
-    proc K::init() {
-        Console::K::clear();
+
+    const COLOR_DEFAULT_FG: UInt8 = 15;
+    const COLOR_DEFAULT_BG: UInt8 = 0;
+
+    const ERR_OK: UInt32 = 0;
+    const ERR_DOMAIN_NOT_AVAILABLE: UInt32 = 100;
+
+    proc K::console_init() -> UInt32 {
+        clear();
+        set_color(COLOR_DEFAULT_FG, COLOR_DEFAULT_BG);
+        set_cursor(0, 0);
+        return ERR_OK;
     }
-    
-    proc K::putchar(ch: UInt8) {
-        emit "Console::putchar";
+
+    proc K::init() -> UInt32 {
+        return console_init();
     }
-    
-    proc K::puts(s: UInt64) {
-        emit "Console::puts";
+
+    proc K::putchar(ch: UInt8) -> UInt32 {
+        emit "console_putchar";
+        return ch;
     }
-    
-    proc K::clear() {
-        emit "Console::clear";
+
+    proc K::puts(ptr: UInt64) -> UInt32 {
+        emit "console_puts";
+        if ptr == 0 {
+            return 0;
+        } else {
+            return 1;
+        }
     }
-    
-    proc K::set_cursor(row: UInt32, col: UInt32) {
-        emit "Console::set_cursor";
+
+    proc K::clear() -> UInt32 {
+        emit "console_clear";
+        return ERR_OK;
     }
-    
-    proc K::get_cursor() -> UInt64 {
+
+    proc K::set_cursor(row: UInt32, col: UInt32) -> UInt32 {
+        if row >= VGA_HEIGHT {
+            return 1;
+        } else {
+            if col >= VGA_WIDTH {
+                return 1;
+            } else {
+                emit "console_set_cursor";
+                return ERR_OK;
+            }
+        }
+    }
+
+    proc K::get_cursor_row() -> UInt32 {
         return 0;
     }
-    
-    proc Q::init() -> UInt32 {
-        return 100;
+
+    proc K::get_cursor_col() -> UInt32 {
+        return 0;
     }
-    
-    proc Q::putchar(ch: UInt8) -> UInt32 {
-        return 100;
+
+    proc K::set_color(fg: UInt8, bg: UInt8) -> UInt32 {
+        emit "console_set_color";
+        return fg + bg;
     }
-    
-    proc Q::puts(s: UInt64) -> UInt32 {
-        return 100;
-    }
-    
-    proc Q::clear() -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::init() -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::putchar(ch: UInt8) -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::puts(s: UInt64) -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::clear() -> UInt32 {
-        return 100;
-    }
+
 }

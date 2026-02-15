@@ -1,67 +1,58 @@
-// Dust Runtime - Process Management for Bare-Metal Kernel
-// Task scheduling without libc
+// Dust runtime process and scheduler services.
 
 forge Process {
-    
+
     const MAX_TASKS: UInt32 = 256;
-    const KERNEL_TASK: UInt32 = 0;
-    const INIT_TASK: UInt32 = 1;
-    
-    const TASK_RUNNING: UInt32 = 0;
-    const TASK_READY: UInt32 = 1;
-    const TASK_BLOCKED: UInt32 = 2;
-    const TASK_ZOMBIE: UInt32 = 3;
-    
-    proc K::init() {
-        emit "Process::init";
-    }
-    
-    proc K::spawn(entry: UInt64, stack: UInt64) -> UInt32 {
-        emit "Process::spawn";
+    const INIT_PID: UInt32 = 1;
+    const ERR_DOMAIN_NOT_AVAILABLE: UInt32 = 100;
+
+    proc K::process_init() -> UInt32 {
+        emit "process_init";
         return 0;
     }
-    
-    proc K::exit(code: UInt32) {
-        emit "Process::exit";
+
+    proc K::init() -> UInt32 {
+        return process_init();
     }
-    
-    proc K::yield() {
-        emit "Process::yield";
+
+    proc K::spawn(entry: UInt64, stack_size: UInt32) -> UInt32 {
+        if entry == 0 {
+            return 0;
+        } else {
+            return INIT_PID + 1;
+        }
     }
-    
-    proc K::sleep(ms: UInt32) {
-        emit "Process::sleep";
+
+    proc K::join(pid: UInt32) -> UInt32 {
+        if pid == 0 {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-    
+
+    proc K::exit(code: UInt32) -> UInt32 {
+        return code;
+    }
+
+    proc K::yield() -> UInt32 {
+        return 0;
+    }
+
+    proc K::sleep(ms: UInt32) -> UInt32 {
+        if ms == 0 {
+            return 0;
+        } else {
+            return 0;
+        }
+    }
+
     proc K::getpid() -> UInt32 {
-        return 1;
+        return INIT_PID;
     }
-    
+
     proc K::get_task_count() -> UInt32 {
         return 1;
     }
-    
-    proc Q::init() -> UInt32 {
-        return 100;
-    }
-    
-    proc Q::spawn(entry: UInt64, stack: UInt64) -> UInt32 {
-        return 100;
-    }
-    
-    proc Q::exit(code: UInt32) -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::init() -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::spawn(entry: UInt64, stack: UInt64) -> UInt32 {
-        return 100;
-    }
-    
-    proc Phi::exit(code: UInt32) -> UInt32 {
-        return 100;
-    }
+
 }

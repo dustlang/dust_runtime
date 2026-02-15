@@ -1,0 +1,16 @@
+// dust_runtime bridge for xdv-os integration checks.
+
+forge DustRuntimeBridge {
+    const RUNTIME_VERSION: UInt32 = 2;
+
+    proc K::init() -> UInt32 {
+        emit "dust_runtime bridge online";
+        runtime_init();
+        return RUNTIME_VERSION + 1;
+    }
+
+    proc K::handoff() -> UInt32 {
+        emit "dust_runtime handoff path ready";
+        return runtime_main();
+    }
+}
