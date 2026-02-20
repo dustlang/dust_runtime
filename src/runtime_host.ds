@@ -1,0 +1,59 @@
+// Host runtime surface for Dust host executables.
+// This API is linker/tool agnostic and is used by Dust-native CLI tools
+// (including dustlink migration) to access host args/env/path/fs/process IO.
+
+forge HostRuntime {
+    // args
+    proc K::args_count() -> UInt32 {
+        return host_args_count();
+    }
+
+    proc K::arg_at(index: UInt32) -> UInt64 {
+        return host_arg_at(index);
+    }
+
+    // env
+    proc K::env_get(name: UInt64) -> UInt64 {
+        return host_env_get(name);
+    }
+
+    // path/fs
+    proc K::path_exists(path: UInt64) -> UInt32 {
+        return host_path_exists(path);
+    }
+
+    proc K::path_is_file(path: UInt64) -> UInt32 {
+        return host_path_is_file(path);
+    }
+
+    proc K::path_find_executable(name: UInt64) -> UInt64 {
+        return host_path_find_executable(name);
+    }
+
+    // process
+    proc K::process_exec(program: UInt64, argv: UInt64) -> UInt32 {
+        return host_process_exec(program, argv);
+    }
+
+    proc K::process_exit(code: UInt32) -> UInt32 {
+        return host_process_exit(code);
+    }
+
+    // io streams
+    proc K::stdout_write(message: UInt64) -> UInt32 {
+        return host_stdout_write(message);
+    }
+
+    proc K::stderr_write(message: UInt64) -> UInt32 {
+        return host_stderr_write(message);
+    }
+
+    // simple string utility
+    proc K::str_eq(lhs: UInt64, rhs: UInt64) -> UInt32 {
+        return host_str_eq(lhs, rhs);
+    }
+
+    proc K::str_starts_with(text: UInt64, prefix: UInt64) -> UInt32 {
+        return host_str_starts_with(text, prefix);
+    }
+}
