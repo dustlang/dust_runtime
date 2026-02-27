@@ -1,4 +1,12 @@
-// dust_runtime bridge for xdv-os integration checks.
+// File: runtime_bridge.ds - This file is part of the DPL Toolchain
+// Copyright (c) 2026 Dust LLC, and Contributors
+// Description:
+//   Dust runtime bridge for xdv-os integration.
+//   Provides:
+//     - Runtime version tracking (RUNTIME_VERSION)
+//     - Initialization bridge (init)
+//     - Handoff mechanism for OS boot (handoff)
+//   Used for integrating dust_runtime with xdv-os kernel and boot processes.
 
 forge DustRuntimeBridge {
     const RUNTIME_VERSION: UInt32 = 2;

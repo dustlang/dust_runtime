@@ -1,4 +1,13 @@
-// Dust runtime process and scheduler services.
+// File: runtime_process.ds - This file is part of the DPL Toolchain
+// Copyright (c) 2026 Dust LLC, and Contributors
+// Description:
+//   Dust runtime process and scheduler services.
+//   Provides:
+//     - Process/Task initialization (process_init)
+//     - Task spawning (spawn)
+//     - Process ID management (INIT_PID = 1)
+//     - MAX_TASKS: 256 concurrent tasks supported
+//   Used for multi-tasking and OS kernel development.
 
 forge Process {
 

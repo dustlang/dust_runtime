@@ -1,4 +1,15 @@
-// Dust runtime memory services.
+// File: runtime_memory.ds - This file is part of the DPL Toolchain
+// Copyright (c) 2026 Dust LLC, and Contributors
+// Description:
+//   Dust runtime memory management services.
+//   Provides:
+//     - Memory initialization (memory_init)
+//     - Dynamic allocation (alloc, free)
+//     - Page-aligned memory operations
+//     - PAGE_SIZE: 4096 bytes (standard x86 page)
+//     - HEAP_START: 10 MB
+//     - HEAP_END: 64 MB
+//   Used for heap management in bare-metal and userspace applications.
 
 forge Memory {
 

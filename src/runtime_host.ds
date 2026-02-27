@@ -1,6 +1,13 @@
-// Host runtime surface for Dust host executables.
-// This API is linker/tool agnostic and is used by Dust-native CLI tools
-// (including dustlink migration) to access host args/env/path/fs/process IO.
+// File: runtime_host.ds - This file is part of the DPL Toolchain
+// Copyright (c) 2026 Dust LLC, and Contributors
+// Description:
+//   Host runtime surface for Dust host executables.
+//   This API is linker/tool agnostic and provides:
+//     - Command line argument access (args_count, arg_at)
+//     - Environment variable access (env_get)
+//     - File system operations (path_exists, path_is_file, path_find_executable)
+//     - Process management capabilities
+//   Used by Dust-native CLI tools including dustlink migration.
 
 forge HostRuntime {
     // args

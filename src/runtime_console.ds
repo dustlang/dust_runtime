@@ -1,4 +1,16 @@
-// Dust runtime console services.
+// File: runtime_console.ds - This file is part of the DPL Toolchain
+// Copyright (c) 2026 Dust LLC, and Contributors
+// Description:
+//   Dust runtime console and display services.
+//   Provides:
+//     - Console initialization (console_init)
+//     - Character output (putchar, puts)
+//     - VGA text mode display support
+//     - VGA_WIDTH: 80 columns
+//     - VGA_HEIGHT: 25 rows
+//     - Color management (foreground/background)
+//     - Cursor position control
+//   Used for text output in bare-metal and OS kernel development.
 
 forge Console {
 

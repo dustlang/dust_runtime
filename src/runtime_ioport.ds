@@ -1,4 +1,11 @@
-// Dust runtime I/O port services.
+// File: runtime_ioport.ds - This file is part of the DPL Toolchain
+// Copyright (c) 2026 Dust LLC, and Contributors
+// Description:
+//   Dust runtime I/O port services for low-level hardware access.
+//   Provides:
+//     - inb/inw/inl: Read byte/word/dword from I/O port
+//     - outb/outw/outl: Write byte/word/dword to I/O port
+//   Used for bare-metal hardware interaction and OS kernel development.
 
 forge IoPort {
 

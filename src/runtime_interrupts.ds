@@ -1,4 +1,14 @@
-// Dust runtime interrupt services.
+// File: runtime_interrupts.ds - This file is part of the DPL Toolchain
+// Copyright (c) 2026 Dust LLC, and Contributors
+// Description:
+//   Dust runtime interrupt services for bare-metal systems.
+//   Provides:
+//     - Interrupt descriptor table (IDT) management
+//     - Interrupt enable/disable controls
+//     - IRQ handling registration
+//     - IDT_SIZE: 256 entries
+//     - IRQ_BASE: 32 (standard PIC offset)
+//   Used for OS kernel and real-time system development.
 
 forge Interrupts {
 

@@ -1,4 +1,13 @@
-// Dust runtime main lifecycle.
+// File: runtime_main.ds - This file is part of the DPL Toolchain
+// Copyright (c) 2026 Dust LLC, and Contributors
+// Description:
+//   Dust runtime main lifecycle management.
+//   This module provides:
+//     - Runtime version information (VERSION_MAJOR, VERSION_MINOR)
+//     - Runtime initialization (runtime_init)
+//     - Main entry point (runtime_main)
+//     - Process startup and shutdown handling
+//     - Error code definitions for runtime operations
 
 forge Runtime {
 
